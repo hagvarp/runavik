@@ -410,7 +410,7 @@
                 ds = JSONstat(jsonStatData).Dataset(0);
                 m = ds.Dimension("month").id;
 
-                var fLen = m.length;
+                var fLen = m.length - 1;
 
 
 
@@ -695,7 +695,7 @@
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
                 m = ds.Dimension("month").id;
-                var fLen = m.length;
+                var fLen = m.length -1;
 
 
                 //Format Data
