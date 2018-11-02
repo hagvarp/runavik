@@ -1999,10 +1999,10 @@
 
                 var yaxisinnflutningur = [];
                 var yaxisutflutningur = [];
-			
+
 
                 for (var i = 0; i < fLen; i++) {
-                    utflutningur = dsutflutningur.Data({ "year": dsutflutningur.Dimension("year").id[i] }, false);
+                    utflutningur = dsutflutningur.Data({ "school": "9","year": dsutflutningur.Dimension("year").id[i] }, false) + dsutflutningur.Data({ "school": "11","year": dsutflutningur.Dimension("year").id[i] }, false) + dsutflutningur.Data({ "school": "12","year": dsutflutningur.Dimension("year").id[i] }, false) + dsutflutningur.Data({ "school": "38","year": dsutflutningur.Dimension("year").id[i] }, false) + dsutflutningur.Data({ "school": "40","year": dsutflutningur.Dimension("year").id[i] }, false) + dsutflutningur.Data({ "school": "45","year": dsutflutningur.Dimension("year").id[i] }, false);
 
 
 					if(utflutningur != null){
