@@ -955,10 +955,6 @@
 
 
                 var unemployment = ds.Data({ "month": ds.Dimension("month") }, false).filter(function(n) { return n; });
-                var arbeidsfjold = ds1.Data({"year": "2005" }, false);
-
-
-                var arbeidsfjold = ds1.Data({ "year": ds1.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
 
 
@@ -966,18 +962,14 @@
                     mon = m[j].replace("M", "-");
 
                     yeararb = mon.substring(0, 4);
-                    arbeidsfjold = ds1.Data({"year": yeararb }, false);
 
 
-
-                    unemploymentdata.push([Date.parse(mon), unemployment[j]/arbeidsfjold*100]);
+                    unemploymentdata.push([Date.parse(mon), unemployment[j]]);
+                   
                     
-                    
-                    console.log(unemployment);
                 }
 
                 for (var i = 0; i < fLen; i++) {
-                    var arbeiðsfjold = ds1.Data({ "year": ds1.Dimension("year").id[i] }, false);
                 	var unemployment = ds.Data({ "month": ds.Dimension("month").id[i] }, false);
 
 
@@ -1137,7 +1129,7 @@
 					      "selection": {
 					        "filter": "item",
 					        "values": [
-					          "FUL"
+					          "AL-PCT"
 					        ]
 					      }
 					    },
