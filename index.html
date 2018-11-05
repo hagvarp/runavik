@@ -917,7 +917,7 @@
 //---------------------------------------------------------
 //                       CHART 4
 //---------------------------------------------------------
-            var chart4;
+var chart4;
             var chart4Data;
             var chart4_last_month;
             var chart4Timeout0;
@@ -925,7 +925,7 @@
             function startAnimatingChart4() {
                 clearTimeout(chart4Timeout0);
 
-                drawChart4a();
+                drawChart4();
 
                 chart4Timeout0 = setTimeout(function () {
                     chart4.update({xAxis: {
@@ -936,44 +936,27 @@
             }
 
             //Chart 4 specific functions
-            function drawChart4a() {
-                var jsonStatData = chart4aData;
-                var jsonStatAFData= chart4a1Data;
+            function drawChart4() {
+                var jsonStatData = chart4Data;
 
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
-                ds1 = JSONstat(jsonStatAFData).Dataset(0);
+                t = ds.Dimension("year").length - 1;
+                year = ds.Dimension("year").id;
 
-                t = ds1.Dimension("year").length - 1;
-                year = ds1.Dimension("year").id;
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
-                var mLen = m.length;
 
                 //Format Data
                 var unemploymentdata = [];
 
-
-                var unemployment = ds.Data({ "month": ds.Dimension("month") }, false).filter(function(n) { return n; });
-
-                console.log(unemployment);
-
-                for (var j = 120; j < mLen; j++) {
-                    mon = m[j].replace("M", "-");
-
-                    yeararb = mon.substring(0, 4);
-
-
-                    unemploymentdata.push([Date.parse(mon), unemployment[j]]);
-                   
-                    
-                }
-
                 for (var i = 0; i < fLen; i++) {
-                	var unemployment = ds.Data({ "month": ds.Dimension("month").id[i] }, false);
+                    var unemployment = ds.Data({ "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
-
-
+                    for (var j = 0; j < unemployment.length; j++) {
+                        var month = m[j].substring(1);
+                        unemploymentdata.push([Date.parse(year[i] + "-" + month), unemployment[j]]);
+                    }
                 }
 
                 var chart4_last_month = unemploymentdata[unemploymentdata.length - 1];
@@ -1118,85 +1101,59 @@
                 });
             }
 
-
-
-
-            function loadDataAndBuildChart4a() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM02/al_aldkysy_t.px", {
-					   "query": [
-					    {
-					      "code": "measure",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "AL-PCT"
-					        ]
-					      }
-					    },
-					    {
-					      "code": "region",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "EY",
-					        ]
-					      }
-					    }				    
-					  ],
+            function loadDataAndBuildChart4() {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM02/al_aldkysy.px", {
+                    "query": [
+                        {
+                            "code": "measure",
+                            "selection": {
+                                "filter": "item",
+                                "values": [
+                                    "AL-PCT"
+                                ]
+                            }
+                        },
+                        {
+                        "code": "region",
+                        "selection": {
+                            "filter": "item",
+                            "values": [
+                            "EY"
+                            ]
+                        }
+                        },                        
+                        {
+                            "code": "month",
+                            "selection": {
+                                "filter": "item",
+                                "values": [
+                                    "M01",
+                                    "M02",
+                                    "M03",
+                                    "M04",
+                                    "M05",
+                                    "M06",
+                                    "M07",
+                                    "M08",
+                                    "M09",
+                                    "M10",
+                                    "M11",
+                                    "M12"
+                                ]
+                            }
+                        }
+                    ],
                     "response": {
                         "format": "json-stat"
-
                     }
-
-                },function(data) {
-                    chart4aData = data;
-                    loadDataAndBuildChart4a1();
-                } );
+                }, function(data) {
+                    chart4Data = data;
+                    drawChart4();
+                    startAnimatingChart4();
+                });
             }
 
 
-            function loadDataAndBuildChart4a1() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM01/afk_afavb66.px", {
-                      "query": [
-
-					    {
-					      "code": "region",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "EY",
-					        ]
-					      }
-					    },
-					    {
-					      "code": "unit",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "TAL"
-					        ]
-					      }
-					    },
-					    {
-					      "code": "measure",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "AF"
-					        ]
-					      }
-					    }
-					  ],
-                    "response": {
-                        "format": "json-stat"
-
-                    }
-
-                },function(data) {
-                    chart4a1Data = data;
-                    drawChart4a();
-                } );
-            }
 
 
 
@@ -2176,7 +2133,7 @@
                 loadDataAndBuildChart1();
                 loadDataAndBuildChart2();
                 loadDataAndBuildChart3();
-                loadDataAndBuildChart4a();
+                loadDataAndBuildChart4();
                 loadDataAndBuildChart4b();
                 loadDataAndBuildChart5();
                 loadDataAndBuildChart6();
