@@ -956,7 +956,7 @@
 
                 var unemployment = ds.Data({ "month": ds.Dimension("month") }, false).filter(function(n) { return n; });
 
-
+                console.log(unemployment);
 
                 for (var j = 120; j < mLen; j++) {
                     mon = m[j].replace("M", "-");
