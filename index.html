@@ -135,7 +135,7 @@
                 var folkataldata = [];
 
                 for (var i = 0; i < fLen; i++) {
-                    folkatal = ds.Data({ "changes": "PRIMO", "village/city": "4207", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
+                    folkatal = ds.Data({ "changes": "Popu_primo", "village/city": "4207", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < folkatal.length; j++) {
                         mon = m[j].replace("M", "-");
@@ -322,7 +322,7 @@
                             "selection": {
                                 "filter": "item",
                                 "values": [
-                                    "PRIMO", "ULTIMO"
+                                    "Popu_primo", "Popu_ultimo"
                                 ]
                             }
                         }
@@ -424,12 +424,12 @@
 
                 for (var i = 0; i < fLen; i++) {
 
-                    tilflyting = ds.Data({ "changes": "IMMIUT", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    tilflyting = ds.Data({ "changes": "Immigr_int", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
 
-                    imidom = ds.Data({ "changes": "IMMIDOM", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    imidom = ds.Data({ "changes": "Immigr_dom", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
 
-					emidom = ds.Data({ "changes": "EMIDOM", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
-                    fraflyting = ds.Data({ "changes": "EMIUT", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+					emidom = ds.Data({ "changes": "Emmigr_dom", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    fraflyting = ds.Data({ "changes": "Emmigr_int", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
 
 
                         mon = m[i].replace("M", "-");
@@ -610,7 +610,7 @@
                             "selection": {
                                 "filter": "item",
                                 "values": [
-                                    "EMIUT", "IMMIUT", "EMIDOM", "IMMIDOM"
+                                    "Emmigr_int", "Immigr_int", "Emmigr_dom", "Immigr_dom"
                                 ]
                             }
                         }
@@ -711,11 +711,11 @@
 
                 for (var i = 0; i < fLen; i++) {
 
-                    tilflyting = ds.Data({ "changes": "BORNE", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    tilflyting = ds.Data({ "changes": "Birth", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
 
 
 
-                    fraflyting = ds.Data({ "changes": "DEAD", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    fraflyting = ds.Data({ "changes": "Death", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
 
                     
                         mon = m[i].replace("M", "-");
@@ -895,7 +895,7 @@
                             "selection": {
                                 "filter": "item",
                                 "values": [
-                                    "BORNE", "DEAD"
+                                    "Birth", "Death"
                                 ]
                             }
                         }
@@ -1109,7 +1109,7 @@ var chart4;
                             "selection": {
                                 "filter": "item",
                                 "values": [
-                                    "AL-PCT"
+                                    "UNE_FE_PCT_LF"
                                 ]
                             }
                         },
@@ -1118,7 +1118,7 @@ var chart4;
                         "selection": {
                             "filter": "item",
                             "values": [
-                            "EY"
+                            "4200"
                             ]
                         }
                         },                        
@@ -1179,7 +1179,7 @@ var chart4;
             function drawChart4b() {
 
                 var jsonStatData = chart4bData;
-                var jsonStatUtflutningurData= chart4b1Data;
+
 
 
                 //Extrat Data From JSON Stat
@@ -1187,17 +1187,14 @@ var chart4;
                 ds = JSONstat(jsonStatData).Dataset(0);
 
 
-                ds1 = JSONstat(jsonStatUtflutningurData).Dataset(0);
 
-
-
-              var Nordstreymoyar = (ds.Data({"measure": "FUL", "region":"NS"}, false))/(ds1.Data({"measure": "AF", "region":"NS"}, false))*100;
-              var Sudurstreymoyar = (ds.Data({"measure": "FUL", "region":"SS"}, false))/ds1.Data({"measure": "AF", "region":"SS"}, false)*100;
-              var Suduroyar = (ds.Data({"measure": "FUL", "region":"SU"}, false))/ds1.Data({"measure": "AF", "region":"SU"}, false)*100;
-              var Sandoyar = (ds.Data({"measure": "FUL", "region":"SA"}, false))/ds1.Data({"measure": "AF", "region":"SA"}, false)*100;
-              var Vaga = (ds.Data({"measure": "FUL", "region":"VA"}, false))/ds1.Data({"measure": "AF", "region":"VA"}, false)*100;
-              var Eysturoyar = (ds.Data({"measure": "FUL", "region":"EY"}, false))/ds1.Data({"measure": "AF", "region":"EY"}, false)*100;
-              var Nordoya = (ds.Data({"measure": "FUL", "region":"NO"}, false))/ds1.Data({"measure": "AF", "region":"NO"}, false)*100;
+              var Nordstreymoyar = (ds.Data({"measure": "UNE_FE_PCT_LF", "region":"4300"}, false));
+              var Sudurstreymoyar = (ds.Data({"measure": "UNE_FE_PCT_LF", "region":"4700"}, false));
+              var Suduroyar = (ds.Data({"measure": "UNE_FE_PCT_LF", "region":"4600"}, false));
+              var Sandoyar = (ds.Data({"measure": "UNE_FE_PCT_LF", "region":"4500"}, false));
+              var Vaga = (ds.Data({"measure": "UNE_FE_PCT_LF", "region":"4400"}, false));
+              var Eysturoyar = (ds.Data({"measure": "UNE_FE_PCT_LF", "region":"4200"}, false));
+              var Nordoya = (ds.Data({"measure": "UNE_FE_PCT_LF", "region":"4100"}, false));
 
           var data = [
                   ['Nordstreymoyar', Nordstreymoyar],
@@ -1281,7 +1278,7 @@ var chart4;
 					      "selection": {
 					        "filter": "item",
 					        "values": [
-					          "FUL"
+					          "UNE_FE_PCT_LF"
 					        ]
 					      }
 					    },
@@ -1290,13 +1287,13 @@ var chart4;
 					      "selection": {
 					        "filter": "item",
 					        "values": [
-					          "NO",
-					          "EY",
-					          "NS",
-					          "SS",
-					          "VA",
-					          "SA",
-					          "SU"
+					          "4100",
+					          "4200",
+					          "4300",
+					          "4700",
+					          "4400",
+					          "4500",
+					          "4600"
 					        ]
 					      }
 					    },
@@ -1317,71 +1314,9 @@ var chart4;
 
                 },function(data) {
                     chart4bData = data;
-                    loadDataAndBuildChart4b1();
-                } );
-            }
-
-
-            function loadDataAndBuildChart4b1() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM01/afk_afavb66.px", {
-                      "query": [
-
-					    {
-					      "code": "region",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "NO",
-					          "EY",
-					          "NS",
-					          "SS",
-					          "VA",
-					          "SA",
-					          "SU"
-					        ]
-					      }
-					    },                      
-					    {
-					      "code": "year",
-					      "selection": {
-					        "filter": "top",
-					        "values": [
-					          "1"
-					        ]
-					      }
-					    },
-					    {
-					      "code": "unit",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "TAL"
-					        ]
-					      }
-					    },
-					    {
-					      "code": "measure",
-					      "selection": {
-					        "filter": "item",
-					        "values": [
-					          "AF"
-					        ]
-					      }
-					    }
-					  ],
-                    "response": {
-                        "format": "json-stat"
-
-                    }
-
-                },function(data) {
-                    chart4b1Data = data;
                     drawChart4b();
                 } );
             }
-
-
-
 
 
 
@@ -1605,7 +1540,7 @@ var chart4;
 				      "selection": {
 				        "filter": "item",
 				        "values": [
-				          "EY"
+				          "4200"
 				        ]
 				      }
 				    }
@@ -1842,7 +1777,7 @@ var chart4;
 				      "selection": {
 				        "filter": "item",
 				        "values": [
-				          "420000"
+				          "4200"
 				        ]
 				      }
 				    },
