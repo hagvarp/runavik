@@ -130,12 +130,13 @@
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
 
+
                 //Format Data
 
                 var folkataldata = [];
 
                 for (var i = 0; i < fLen; i++) {
-                    folkatal = ds.Data({ "changes": "Popu_primo", "village/city": "4207", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
+                    folkatal = ds.Data({ "changes": "Popu_primo", "village/city": "100900", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < folkatal.length; j++) {
                         mon = m[j].replace("M", "-");
@@ -311,9 +312,9 @@
                         {
                             "code": "village/city",
 						      "selection": {
-						        "filter": "agg:municipality-fo-2017.agg",
+						        "filter": "agg:sdwh-municipality-fo-2017.agg",
 						        "values": [
-						          "4207"
+						          "100900"
 						        ]
 						      }
                         },
@@ -424,12 +425,12 @@
 
                 for (var i = 0; i < fLen; i++) {
 
-                    tilflyting = ds.Data({ "changes": "Immigr_int", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    tilflyting = ds.Data({ "changes": "Immigr_int", "village/city": "100900", "month": ds.Dimension("month").id[i] }, false);
 
-                    imidom = ds.Data({ "changes": "Immigr_dom", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    imidom = ds.Data({ "changes": "Immigr_dom", "village/city": "100900", "month": ds.Dimension("month").id[i] }, false);
 
-					emidom = ds.Data({ "changes": "Emmigr_dom", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
-                    fraflyting = ds.Data({ "changes": "Emmigr_int", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+					emidom = ds.Data({ "changes": "Emmigr_dom", "village/city": "100900", "month": ds.Dimension("month").id[i] }, false);
+                    fraflyting = ds.Data({ "changes": "Emmigr_int", "village/city": "100900", "month": ds.Dimension("month").id[i] }, false);
 
 
                         mon = m[i].replace("M", "-");
@@ -599,9 +600,9 @@
                         {
                             "code": "village/city",
 						      "selection": {
-						        "filter": "agg:municipality-fo-2017.agg",
+						        "filter": "agg:sdwh-municipality-fo-2017.agg",
 						        "values": [
-						          "4207"
+						          "100900"
 						        ]
 						      }
                         },
@@ -711,11 +712,11 @@
 
                 for (var i = 0; i < fLen; i++) {
 
-                    tilflyting = ds.Data({ "changes": "Birth", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    tilflyting = ds.Data({ "changes": "Birth", "village/city": "100900", "month": ds.Dimension("month").id[i] }, false);
 
 
 
-                    fraflyting = ds.Data({ "changes": "Death", "village/city": "4207", "month": ds.Dimension("month").id[i] }, false);
+                    fraflyting = ds.Data({ "changes": "Death", "village/city": "100900", "month": ds.Dimension("month").id[i] }, false);
 
                     
                         mon = m[i].replace("M", "-");
@@ -884,9 +885,9 @@
                         {
                             "code": "village/city",
 						      "selection": {
-						        "filter": "agg:municipality-fo-2017.agg",
+						        "filter": "agg:sdwh-municipality-fo-2017.agg",
 						        "values": [
-						          "4207"
+						          "100900"
 						        ]
 						      }
                         },
@@ -1102,7 +1103,7 @@ var chart4;
             }
 
             function loadDataAndBuildChart4() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM02/al_aldkysy.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/ARL/arl_aldkysy.px", {
                     "query": [
                         {
                             "code": "measure",
@@ -1271,7 +1272,7 @@ var chart4;
             }
 
             function loadDataAndBuildChart4b() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM02/al_aldkysy_t.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/ARL/arl_aldkysy_t.px", {
 					   "query": [
 					    {
 					      "code": "measure",
@@ -1356,60 +1357,36 @@ var chart4;
             function drawChart5() {
 
                 var jsonStatData = chart5Data;
-                var jsonStatUtflutningurData= chart5Data;
-
-
                 //Extrat Data From JSON Stat
-
                 ds = JSONstat(jsonStatData).Dataset(0);
+                m = ds.Dimension("month").id;
+                var fLen = m.length;
+                
 
-
-                dsutflutningur = JSONstat(jsonStatUtflutningurData).Dataset(0);
-
-                t = dsutflutningur.Dimension("year").length - 1;
-                year = dsutflutningur.Dimension("year").id;
-
-                var fLen = year.length;
 
 
                 //Format Data
+                var lonirdata = [];
+                var trendurdata = [];
+                var month;
 
-                var innflutningurdata = [];
-                var utflutningurdata = [];
-                var nettoflytingdata = [];
-
-                var yaxisinnflutningur = [];
-                var yaxisutflutningur = [];
-
-
-
-				
 
                 for (var i = 0; i < fLen; i++) {
 
+                    var lonir = ds.Data({"month": ds.Dimension("month").id[i] }, false);
 
-
-
-
-                    utflutningur = dsutflutningur.Data({ "year": dsutflutningur.Dimension("year").id[i] }, false);
-
-
-
-
-                    utflutningurdata.push([Date.parse(year[i]), utflutningur]);
-
-
-
-
+                    month = m[i].replace("M", "-");
+                    lonirdata.push([Date.parse(month), lonir/1000000]);
                 }
 
+                 var chart5_last_month = lonirdata[lonirdata.length - 1];
+                chart5_last_month = chart5_last_month[0];
 
-
-
+                console.log(lonirdata); 
                 //Build Series
                 var createdSeries = [{
-                    name: "Løntakarar",
-                    data: utflutningurdata,
+                    name: "Lønargjaldingar",
+                    data: lonirdata,
                     color: "#7dbd39",
                     borderWidth: 0,
                     tooltip: {
@@ -1533,23 +1510,24 @@ var chart4;
             }
 
             function loadDataAndBuildChart5() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM03/lont_vgar.px", {
-                    "query": [
-				    {
-				      "code": "district",
-				      "selection": {
-				        "filter": "item",
-				        "values": [
-				          "4200"
-				        ]
-				      }
-				    }
-                    ],
-                    "response": {
+                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/AM/LON/LON01/lon_ul_kom_md.px", 
+                    {
+                      "query": [
+                        {
+                          "code": "employee's municipality of residence",
+                          "selection": {
+                            "filter": "item",
+                            "values": [
+                              "100900"
+                            ]
+                          }
+                        }
+                      ],
+                      "response": {
                         "format": "json-stat"
-
+                      }
                     }
-                },function(data) {
+            ,function(data) {
                     chart5Data = data;
                     drawChart5();
                     startAnimatingChart5();
@@ -1602,39 +1580,39 @@ var chart4;
                 var jsonStatData = chart6Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-                var fLen = year.length;
                 m = ds.Dimension("month").id;
+                var fLen = m.length;
 
 
-            //Format Data
 
-                var lontakarardata = [];
-                var trendurdata = [];
 
-                var yaxislontakarar = [];
-                var yaxisfraflyting = [];
+                //Format Data
+                var starvsfolkdata = [];
+                var month;
+
 
                 for (var i = 0; i < fLen; i++) {
-                    lontakarar = ds.Data({ "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
-                    for (var j = 0; j < lontakarar.length; j++) {
-                         var month = m[j].substring(1);
+                    var starvsfolk = ds.Data({"month": ds.Dimension("month").id[i] }, false);
 
-                        yaxislontakarar.push[lontakarar[j]];
-                        lontakarardata.push([Date.parse(year[i] + "-" + month), (lontakarar[j]/1000)]);
+                    month = m[i].replace("M", "-");
+                    starvsfolkdata.push([Date.parse(month), starvsfolk]);
 
-                    }
                 }
 
-                var chart6_last_month = lontakarardata[lontakarardata.length - 1];
+
+
+                console.log(starvsfolkdata);
+        
+
+
+                var chart6_last_month = starvsfolkdata[starvsfolkdata.length - 1];
                 chart6_last_month = chart6_last_month[0];
 
                 //Build Series
                 var createdSeries = [{
-                    name: "Lønargjaldingar",
-                    data: lontakarardata,
+                    name: "starvsfólk",
+                    data: starvsfolkdata,
                     color: "#7dbd39",
                     borderWidth: 0,
                     tooltip: {
@@ -1757,7 +1735,7 @@ var chart4;
                                 formatter: function() {
                                   var last  = this.series.data[this.series.data.length - 1];
                                   if (this.point.category === last.category  && this.point.y === last.y) {
-                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' + Highcharts.dateFormat("%b &apos;%y",this.point.x) + "</span><br />" + Highcharts.numberFormat(this.point.y,0) + " mió.</div>");
+                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' + Highcharts.dateFormat("%b &apos;%y",this.point.x) + "</span><br />" + Highcharts.numberFormat(this.point.y,0) + "</div>");
                                   }
                                   else {return};
                                 }
@@ -1769,46 +1747,31 @@ var chart4;
             }
 
             function loadDataAndBuildChart6() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM04/lon_symd.px", {
-                    "query": [
-
-				    {
-				      "code": "region",
-				      "selection": {
-				        "filter": "item",
-				        "values": [
-				          "4200"
-				        ]
-				      }
-				    },
-
-
-				    {
-				      "code": "month",
-				      "selection": {
-				        "filter": "item",
-				        "values": [
-				          "M01",
-				          "M02",
-				          "M03",
-				          "M04",
-				          "M05",
-				          "M06",
-				          "M07",
-				          "M08",
-				          "M09",
-				          "M10",
-				          "M11",
-				          "M12"
-				        ]
-				      }
-				    }				    
-
-                    ],
-                    "response": {
-                        "format": "json-stat"
-
+                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/AM/AMS/STF/stf_kom_md.px", {
+                  "query": [
+                    {
+                      "code": "measure",
+                      "selection": {
+                        "filter": "item",
+                        "values": [
+                          "MAINJOB"
+                        ]
+                      }
+                    },
+                    {
+                      "code": "employee's municipality of residence",
+                      "selection": {
+                        "filter": "item",
+                        "values": [
+                          "100900"
+                        ]
+                      }
                     }
+                  ],
+                  "response": {
+                    "format": "json-stat"
+                  }
+                
                 },function(data) {
                     chart6Data = data;
                     drawChart6();
@@ -2017,7 +1980,7 @@ var chart4;
             }
 
             function loadDataAndBuildChart7() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/UV/UV02/fs_ntalsk.px", {
+                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/UB/NOL/FSK/fs_ntalsk.px", {
                     "query": [
 					    {
 					      "code": "school",
@@ -2155,25 +2118,25 @@ var chart4;
         <section data-state="lonargjaldingar" data-background="assets/lonargjaldingar.jpg">
             <div class="infobox blue">
                 <div class="background"></div>
-                <h2>Lønargjaldingar, Eysturoy<h2/>
+                <h2>Lønargjaldingar<h2/>
                 <p>í mió. kr.</p>
                     <div>
-                        <div id="chart6"></div>
+                        <div id="chart5"></div>
                     </div>
             </div>
         </section>
 
 
         <section data-background="assets/lontakarar.jpg" data-background-transition="fade" data-autoslide="4000">
-            <h1><img src="assets/logo.png" alt="Hagstova Føroya" class="logo" />Løntakarar</h1>
+            <h1><img src="assets/logo.png" alt="Hagstova Føroya" class="logo" />Starvsfólk</h1>
         </section>
         <section data-state="lontakarar" data-background="assets/lontakarar.jpg" data-autoslide="15000">
             <div class="infobox blue">
                 <div class="background"></div>
-                <h2>Løntakarar, Eysturoy <h2/>
-                <p>16-74 ár</p>
+                <h2>Starvsfólk<h2/>
+                <p>13 og eldri</p>
                     <div>
-                        <div id="chart5"></div>
+                        <div id="chart6"></div>
                     </div>
             </div>
         </section>
@@ -2319,11 +2282,11 @@ var chart4;
             }, false);
 
 
-            Reveal.addEventListener("lontakarar", function () {
+            Reveal.addEventListener("lonargjaldingar", function () {
                 startAnimatingChart5();
             }, false);
 
-            Reveal.addEventListener("lonargjaldingar", function () {
+            Reveal.addEventListener("starvsfólk", function () {
                 startAnimatingChart6();
             }, false);
 
